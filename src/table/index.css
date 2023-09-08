@@ -27,10 +27,6 @@ th {
         padding: 5px;
         border: 1px solid black;
     }
-    tr {
-        display: inline-flex;
-
-    }
     .stack {
         margin-bottom: 10px;
     }

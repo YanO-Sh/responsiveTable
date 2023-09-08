@@ -58,7 +58,7 @@ const Table = () => {
 			{ currentPageSize > 800 ? <table>
 					<thead>
 					<tr>
-						{ columnsInfo.map((i) => <th key={ i }>{ i }</th>) }
+						{ columnsInfo.map((i, index) => <th key={ i }>{ i }</th>) }
 					</tr>
 					</thead>
 					<tbody>
@@ -66,21 +66,32 @@ const Table = () => {
 					</tbody>
 				</table> :
 				<div className={ 'stack' }>
-					{ columnsInfo.map((col, index) => (
-						<table>
-							<tr>
-								<th>{ col }</th>
-								{ entriesInfo[index].map(row => <td>{ row }</td>) }
-							</tr>
-						</table>
-					))
+					{ columnsInfo.map((col, index) => {
+						return (
+							<table>
+								{ entriesInfo[index].length > 5 ?
+									<>
+										<tr>
+											<th rowSpan={3} >{ col }</th>
+										</tr>
+										<tr>{ entriesInfo[index].slice(0, 5).map(row => <td >{ row }</td>) }</tr>
 
-					}
-				</div>
-
-			}
+										<tr>{ entriesInfo[index].slice(5).map(row => <td >{ row }</td>) }</tr>
+									</> :
+									<tr>
+										<th>{ col }</th>
+										{ entriesInfo[index].map(row => <tr>
+											<td>{ row }</td>
+										</tr>) }
+									</tr>
+								}
+							</table>
+						)
+					}) }
 		</div>
-	);
+}
+</div>
+)
 };
 
 export default Table;
