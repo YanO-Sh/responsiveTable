@@ -12,9 +12,27 @@ th, td {
 th {
     background-color: #f2f2f2;
 }
-@media (max-width: 825px) {
+
+.stack > * {
+    margin-bottom: 10px;
+}
+
+.stack:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 800px) {
     th,td{
         font-size:14px ;
+        padding: 5px;
+        border: 1px solid black;
+    }
+    tr {
+        display: inline-flex;
+
+    }
+    .stack {
+        margin-bottom: 10px;
     }
 }
 @media (max-width: 700px) {

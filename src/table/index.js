@@ -1,6 +1,6 @@
 import './index.css'
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const columnsInfo = [
 	'column 1',
@@ -16,7 +16,7 @@ const columnsInfo = [
 ]
 
 const entriesInfo = [
-	['data 1', 'data 2', 'data 3', 'data 4', 'data 5', 'data 6', 'data 7', 'data 8', 'data 9', 'data 10'],
+	['data 1', 'data 3', 'data 3', 'data 4', 'data 5', 'data 6', 'data 7', 'data 8', 'data 9', 'data 10'],
 	['data 1', 'data 2', 'data 3', 'data 4', 'data 5', 'data 6', 'data 7', 'data 8', 'data 9', 'data 10'],
 	['data 1', 'data 2', 'data 3', 'data 4', 'data 5', 'data 6', 'data 7', 'data 8', 'data 9', 'data 10'],
 	['data 1', 'data 2', 'data 3', 'data 4', 'data 5', 'data 6', 'data 7', 'data 8', 'data 9', 'data 10'],
@@ -39,19 +39,46 @@ const entriesInfo = [
 ]
 
 const Table = () => {
+	const [currentPageSize, setCurrentPageSize] = useState(window.innerWidth)
+
+	useEffect(() => {
+		const watch = (event) => {
+			setCurrentPageSize(event.target.innerWidth);
+		}
+
+		window.addEventListener('resize', watch)
+
+		return () => {
+			window.removeEventListener('resize', watch)
+		}
+	}, [])
 
 	return (
 		<div>
-			<table>
-				<thead>
-				<tr>
-					{ columnsInfo.map((i) => <th key={ i }>{ i }</th>) }
-				</tr>
-				</thead>
-				<tbody>
-				{ entriesInfo.map((i, index) => <tr key={ index }>{ i.map((i) => <td key={ i }>{ i }</td>) }</tr>) }
-				</tbody>
-			</table>
+			{ currentPageSize > 800 ? <table>
+					<thead>
+					<tr>
+						{ columnsInfo.map((i) => <th key={ i }>{ i }</th>) }
+					</tr>
+					</thead>
+					<tbody>
+					{ entriesInfo.map((i, index) => <tr key={ index }>{ i.map((i) => <td key={ i }>{ i }</td>) }</tr>) }
+					</tbody>
+				</table> :
+				<div className={ 'stack' }>
+					{ columnsInfo.map((col, index) => (
+						<table>
+							<tr>
+								<th>{ col }</th>
+								{ entriesInfo[index].map(row => <td>{ row }</td>) }
+							</tr>
+						</table>
+					))
+
+					}
+				</div>
+
+			}
 		</div>
 	);
 };
